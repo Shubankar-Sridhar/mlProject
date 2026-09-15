@@ -1,0 +1,19 @@
+api:
+  workers: 8
+  rate_limit:
+    per_minute: 60
+    per_hour: 1000
+
+database:
+  pool_size: 20
+  max_overflow: 40
+
+model:
+  n_gpu_layers: -1
+  n_threads: 16
+
+logging:
+  level: WARNING
+
+monitoring:
+  prometheus_enabled: true

@@ -1,0 +1,23 @@
+training:
+  lora_r: 64
+  lora_alpha: 16
+  lora_dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj
+    - k_proj
+    - o_proj
+  batch_size: 4
+  gradient_accumulation: 4
+  learning_rate: 2e-4
+  num_epochs: 3
+  warmup_steps: 100
+  logging_steps: 10
+  save_steps: 500
+  max_grad_norm: 0.3
+  weight_decay: 0.001
+  max_length: 2048
+  quant_type: nf4
+  compute_dtype: bfloat16
+  use_double_quant: true
+  quant_storage_dtype: uint8
