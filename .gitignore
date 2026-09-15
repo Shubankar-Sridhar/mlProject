@@ -23,30 +23,25 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-
 # PyTorch
 *.pth
 *.pt
 *.bin
 *.safetensors
-
 # Model files
 models/registry/models/
 models/artifacts/
 *.gguf
 *.ggml
-
 # Logs
 logs/
 *.log
 *.out
 *.err
-
 # Environment
 .env
 .env.local
 .env.*.local
-
 # IDE
 .vscode/
 .idea/
@@ -54,29 +49,24 @@ logs/
 *.swo
 *~
 .DS_Store
-
 # Testing
 .pytest_cache/
 .coverage
 htmlcov/
 .tox/
 *.cover
-
 # Docker
 docker-compose.override.yml
 *.pid
-
 # Frontend
 frontend/node_modules/
 frontend/dist/
 frontend/build/
 frontend/.env.local
-
 # Database
 *.db
 *.sqlite
 *.sqlite3
-
 # Backup
 *.bak
 *.backup
