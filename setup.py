@@ -1,0 +1,55 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="enterprise-text-to-sql",
+    version="1.0.0",
+    description="Enterprise Text-to-SQL System with Fine-tuning and Visualization",
+    author="Enterprise AI Team",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    python_requires=">=3.10",
+    install_requires=[
+        "fastapi>=0.104.0",
+        "uvicorn[standard]>=0.24.0",
+        "pydantic>=2.5.0",
+        "python-dotenv>=1.0.0",
+        "sqlalchemy>=2.0.23",
+        "psycopg2-binary>=2.9.9",
+        "asyncpg>=0.29.0",
+        "redis>=5.0.1",
+        "aioredis>=2.0.1",
+        "transformers>=4.35.0",
+        "torch>=2.1.0",
+        "peft>=0.7.0",
+        "bitsandbytes>=0.41.1",
+        "accelerate>=0.25.0",
+        "trl>=0.7.0",
+        "llama-cpp-python>=0.2.26",
+        "altair>=5.1.0",
+        "vega-datasets>=0.9.0",
+        "prometheus-client>=0.19.0",
+        "python-json-logger>=2.0.7",
+        "sentry-sdk>=1.38.0",
+        "pyyaml>=6.0.1",
+        "jsonschema>=4.20.0",
+        "click>=8.1.7",
+        "httpx>=0.25.1",
+    ],
+    extras_require={
+        "dev": [
+            "pytest>=7.4.3",
+            "pytest-cov>=4.1.0",
+            "pytest-asyncio>=0.21.1",
+            "black>=23.11.0",
+            "flake8>=6.1.0",
+            "mypy>=1.7.0",
+            "isort>=5.12.0",
+        ]
+    },
+    entry_points={
+        "console_scripts": [
+            "text2sql-train=scripts.train_cli:main",
+            "text2sql-serve=scripts.serve_cli:main",
+        ],
+    },
+)

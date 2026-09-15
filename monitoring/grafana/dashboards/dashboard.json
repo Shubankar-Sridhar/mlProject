@@ -1,0 +1,40 @@
+{
+  "title": "Text2SQL Dashboard",
+  "uid": "text2sql",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Query Success Rate",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "sum(sql_validations_total{result='success'}) / sum(sql_validations_total) * 100",
+          "legendFormat": "Success Rate"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Query Latency",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(inference_duration_seconds_bucket) by (le))",
+          "legendFormat": "P95"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Chart Types",
+      "type": "piechart",
+      "targets": [
+        {
+          "expr": "sum(chart_selections_total) by (chart_type)",
+          "legendFormat": "{{chart_type}}"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 36
+}
