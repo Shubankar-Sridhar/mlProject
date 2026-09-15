@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1';
+const API_BASE = import.meta.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1';
 
 const apiClient = axios.create({
   baseURL: API_BASE,
@@ -47,7 +47,7 @@ export const api = {
     });
     return response.data;
   },
-  
+
   train: async (databaseUrl, businessDocs, config = {}) => {
     const response = await apiClient.post('/train', {
       database_url: databaseUrl,
@@ -56,17 +56,17 @@ export const api = {
     });
     return response.data;
   },
-  
+
   listModels: async () => {
     const response = await apiClient.get('/models');
     return response.data;
   },
-  
+
   loadModel: async (modelId) => {
     const response = await apiClient.post(`/models/${modelId}/load`);
     return response.data;
   },
-  
+
   health: async () => {
     const response = await apiClient.get('/health');
     return response.data;

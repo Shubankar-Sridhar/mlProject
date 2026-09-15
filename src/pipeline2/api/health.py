@@ -4,7 +4,6 @@ from datetime import datetime
 from dotenv import load_dotenv
 from typing import Dict, Any
 import os
-from pprint import pprint
 import redis
 from sqlalchemy import create_engine, text
 import logging
@@ -25,8 +24,6 @@ async def health_check() -> Dict[str, Any]:
     # Check database
     try:
         database_url = os.getenv('DATABASE_URL', 'postgresql://admin:secure_password@postgres:5432/metadata')
-        print("DEBUG HEALTH")
-        print(database_url)
         engine = create_engine(database_url)
         with engine.connect() as conn:
             conn.execute(text('SELECT 1'))
@@ -40,11 +37,9 @@ async def health_check() -> Dict[str, Any]:
     try:
         redis_url = os.getenv('REDIS_URL', 'redis://redis:6379/0')
         r = redis.Redis.from_url(redis_url)
-        pprint(r)
         r.ping()
         status['services']['redis'] = 'healthy'
     except Exception as e:
-        traceback.print_exc()
         status['services']['redis'] = f'unhealthy: {str(e)}'
         status['status'] = 'degraded'
         logger.error(f"Redis health check failed: {str(e)}")
