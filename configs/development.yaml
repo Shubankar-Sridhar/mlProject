@@ -1,0 +1,19 @@
+api:
+  workers: 2
+  rate_limit:
+    per_minute: 1000
+    per_hour: 10000
+
+database:
+  pool_size: 5
+  max_overflow: 10
+
+model:
+  n_gpu_layers: -1
+  n_threads: 4
+
+logging:
+  level: DEBUG
+
+monitoring:
+  prometheus_enabled: false
