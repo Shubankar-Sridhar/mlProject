@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import QueryInput from './QueryInput';
-import ChartRenderer from './ChartRenderer';
-import DataTable from './DataTable';
-import ResultsView from './ResultsView';
-import { api } from '../services/api';
-import './../styles/main.css';
+import QueryInput from './components/QueryInput';
+import ChartRenderer from './components/ChartRenderer';
+import DataTable from './components/DataTable';
+import ResultsView from './components/ResultsView';
+import { api } from './services/api';
+import './styles/main.css';
 
 const App = () => {
   const [query, setQuery] = useState('');
@@ -16,7 +16,7 @@ const App = () => {
   const handleSubmit = async (queryText) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await api.query(queryText);
       setResults(response);

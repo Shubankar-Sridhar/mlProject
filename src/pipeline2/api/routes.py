@@ -7,6 +7,8 @@ from typing import List, Optional
 import uuid
 import logging
 from datetime import datetime
+import traceback
+from pprint import pprint
 
 from .schemas import QueryRequest, QueryResponse, TrainRequest, TrainResponse, ModelInfo, HealthResponse
 from .dependencies import AuthDependency, RateLimiter, ModelManager, DatabaseManager
@@ -70,7 +72,8 @@ async def query_endpoint(
         
         # Get model
         model = await model_manager.get_model(request.model_id)
-        engine = LlamaEngine(model.path, model.config)
+        pprint(model)
+        engine = LlamaEngine(model.get('path'), model.get('config'))
         
         # Build prompt
         schema = await db_manager.get_schema()
@@ -140,6 +143,7 @@ async def query_endpoint(
         )
         
     except Exception as e:
+        traceback.print_exc()
         logger.error(f"Query {query_id} failed: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 

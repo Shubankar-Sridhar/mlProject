@@ -5,6 +5,7 @@ from fastapi import Request, HTTPException
 from dotenv import load_dotenv
 import redis
 import os
+from pprint import pprint
 import logging
 import datetime
 
@@ -67,17 +68,22 @@ class ModelManager:
     async def get_model(self, model_id: Optional[str] = None) -> Dict[str, Any]:
         """Get model instance."""
         model_id = model_id or self.default_model
+        model_path = os.getenv('MODEL_PATH', '/app/models')
+
         
         if model_id not in self.models:
             # Load model from registry
             try:
                 import json
-                with open(f"/app/models/registry/models/{model_id}/metadata.json", 'r') as f:
+                with open(f"{model_path}/{model_id}/metadata.json", 'r') as f:
                     metadata = json.load(f)
                 
+                print(model_path)
+                print(model_id)
+                pprint(metadata)
                 self.models[model_id] = {
                     'id': model_id,
-                    'path': f"/app/models/registry/models/{model_id}/model.gguf",
+                    'path': f"{model_path}/{model_id}/model.gguf",
                     'version': metadata.get('version', '1.0'),
                     'config': metadata.get('config', {})
                 }
@@ -95,14 +101,9 @@ class ModelManager:
         
         models = []
         model_dir = os.getenv('MODEL_PATH', "/app/models/registry/models")
-        print("LIST MODELS DEBUG")
-        print(model_dir)
         
-
-
         if os.path.exists(model_dir):
             for model_id in os.listdir(model_dir):
-                print(model_id)
                 try:
                     with open(f"{model_dir}/{model_id}/metadata.json", 'r') as f:
                         metadata = json.load(f)
