@@ -2,13 +2,14 @@
 
 from typing import Dict,List, Any, Optional
 from fastapi import Request, HTTPException
+from dotenv import load_dotenv
 import redis
 import os
 import logging
 import datetime
 
 logger = logging.getLogger(__name__)
-
+load_dotenv()
 
 class AuthDependency:
     """Authentication dependency."""
@@ -93,10 +94,15 @@ class ModelManager:
         import os
         
         models = []
-        model_dir = "/app/models/registry/models"
+        model_dir = os.getenv('MODEL_PATH', "/app/models/registry/models")
+        print("LIST MODELS DEBUG")
+        print(model_dir)
         
+
+
         if os.path.exists(model_dir):
             for model_id in os.listdir(model_dir):
+                print(model_id)
                 try:
                     with open(f"{model_dir}/{model_id}/metadata.json", 'r') as f:
                         metadata = json.load(f)
@@ -109,7 +115,6 @@ class ModelManager:
                     })
                 except Exception as e:
                     logger.warning(f"Failed to load metadata for {model_id}: {str(e)}")
-        
         return models
     
     async def register_model(self, model_id: str, model_path: str) -> None:
